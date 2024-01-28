@@ -25,6 +25,7 @@ namespace DAL.Data
         }
         public async Task<bool> Add(Todo todo)
         {
+            //Todo todo = new(description);
             await _projectContext.Todos.AddAsync(todo);
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;

@@ -23,13 +23,14 @@ namespace project.Controllers
         {
             List<Todo> res = await _todoData.GetAll();
             if(res.Count == 0)
-                return BadRequest();
+                return BadRequest(new List<Todo>());
             return Ok(res);
         }
 
         [HttpPost]
         public async Task<ActionResult> PostTodo([FromBody] Todo t)
         {
+            //Todo t = new(description);
             bool res = await _todoData.Add(t);
             if(!res)
                 return BadRequest();
