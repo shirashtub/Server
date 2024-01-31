@@ -22,27 +22,32 @@ namespace project.Controllers
         public async Task<ActionResult<List<Todo>>> GetTodo()
         {
             List<Todo> res = await _todoData.GetAll();
-            if(res.Count == 0)
-                return BadRequest(new List<Todo>());
+            if (res.Count == 0) { return BadRequest(new List<Todo>()); }
             return Ok(res);
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostTodo([FromBody] Todo t)
+        public async Task<ActionResult> PostTodo([FromBody] string description)
         {
-            //Todo t = new(description);
-            bool res = await _todoData.Add(t);
-            if(!res)
-                return BadRequest();
+            bool res = await _todoData.Add(description);
+            if (!res) { return BadRequest(); }
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutTodo(int id, [FromBody] Todo t)
+        public async Task<ActionResult> PutTodo(int id, [FromBody] Todo todo)
         {
-            bool res = await _todoData.Update(id, t);
-            if (!res)
-                return BadRequest();
+            bool res = await _todoData.Update(id, todo);
+            if (!res) { return BadRequest(); }
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("complete/{id}")]
+        public async Task<ActionResult> PutCompleteTodo(int id)
+        {
+            bool res = await _todoData.UpdateComplete(id);
+            if (!res) { return BadRequest(); }
             return Ok();
         }
 
@@ -50,8 +55,7 @@ namespace project.Controllers
         public async Task<ActionResult> DeleteTodo(int id)
         {
             bool res = await _todoData.Delete(id);
-            if (!res)
-                return BadRequest();
+            if (!res) { return BadRequest(); }
             return Ok();
         }
     }

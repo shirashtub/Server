@@ -20,27 +20,31 @@ namespace project.Controllers
         public async Task<ActionResult<List<Todo>>> GetPhoto()
         {
             List<Photo> res = await _photoData.GetAll();
+            if (res.Count == 0) { return BadRequest(new List<Photo>()); }
             return Ok(res);
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostPhoto([FromBody] Photo p)
+        public async Task<ActionResult> PostPhoto([FromBody] string p)
         {
-            await _photoData.Add(p);
+            bool isOk = await _photoData.Add(p);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPhoto(int id, [FromBody] Photo p)
+        public async Task<ActionResult> PutPhoto(int id, [FromBody] string p)
         {
-            await _photoData.Update(id, p);
+            bool isOk = await _photoData.Update(id, p);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePhoto(int id)
         {
-            await _photoData.Delete(id);
+            bool isOk = await _photoData.Delete(id);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
     }

@@ -23,16 +23,29 @@ namespace DAL.Data
             return photo;
         }
 
-        public async Task Add(Photo photo)
+        public async Task<bool> Add(string photo)
         {
+            await _projectContext.Photos.AddAsync(new Photo() { ImgURL = photo});
+            var isOk = _projectContext.SaveChanges() > 0;
+            return isOk;
         }
 
-        public async Task Delete(int id)
+        public async Task<bool> Delete(int id)
         {
+            var idPhoto = _projectContext.Photos.FirstOrDefault(x => x.Id == id);
+            if (idPhoto == null) { return false; }
+            _projectContext.Photos.Remove(idPhoto);
+            var isOk = _projectContext.SaveChanges() > 0;
+            return isOk;
         }
 
-        public async Task Update(int id, Photo photo)
+        public async Task<bool> Update(int id, string photo)
         {
+            var idPhoto = _projectContext.Photos.FirstOrDefault(x => x.Id == id);
+            if (idPhoto == null) { return false; }
+            idPhoto.ImgURL = photo;
+            var isOk = _projectContext.SaveChanges() > 0;
+            return isOk;
         }
     }
 }

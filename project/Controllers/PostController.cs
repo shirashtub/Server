@@ -21,27 +21,40 @@ namespace project.Controllers
         public async Task<ActionResult<List<Post>>> GetPost()
         {
             List<Post> res = await _postData.GetAll();
+            if (res.Count == 0) { return BadRequest(new List<Post>()); }
             return Ok(res);
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostPost([FromBody] Post p)
+        public async Task<ActionResult> PostPost([FromBody] string c)
         {
-            await _postData.Add(p);
+            bool isOk = await _postData.Add(c);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPost(int id, [FromBody] Post p)
+        public async Task<ActionResult> PutPost(int id, [FromBody] string c)
         {
-            await _postData.Update(id, p);
+            bool isOk = await _postData.Update(id, c);
+            if (!isOk) { return BadRequest(); }
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("like/{id}")]
+        public async Task<ActionResult> PutLikePost(int id)
+        {
+            bool isOk = await _postData.UpdateLike(id);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePost(int id)
         {
-            await _postData.Delete(id);
+            bool isOk = await _postData.Delete(id);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
     }

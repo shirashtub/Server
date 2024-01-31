@@ -23,9 +23,9 @@ namespace DAL.Data
             List<Todo> todos = await _projectContext.Todos.ToListAsync();
             return todos;
         }
-        public async Task<bool> Add(Todo todo)
+        public async Task<bool> Add(string description)
         {
-            //Todo todo = new(description);
+            Todo todo = new(description);
             await _projectContext.Todos.AddAsync(todo);
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;
@@ -34,6 +34,7 @@ namespace DAL.Data
         public async Task<bool> Delete(int id)
         {
             var idTodo = _projectContext.Todos.FirstOrDefault(x => x.Id == id);
+            if (idTodo == null) { return false; }
             _projectContext.Todos.Remove(idTodo);
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;
@@ -42,13 +43,19 @@ namespace DAL.Data
         public async Task<bool> Update(int id, Todo todo)
         {
             var idTodo = _projectContext.Todos.FirstOrDefault(x => x.Id == id);
-            if (idTodo == null)
-            {
-                return false;
-            }
+            if (idTodo == null) { return false; }
             idTodo.Description = todo.Description;
             idTodo.Date = todo.Date;
             idTodo.IsComplete = todo.IsComplete;
+            var isOk = _projectContext.SaveChanges() > 0;
+            return isOk;
+        }
+
+        public async  Task<bool> UpdateComplete(int id)
+        {
+            var idTodo = _projectContext.Todos.FirstOrDefault(x => x.Id == id);
+            if (idTodo == null) { return false; }
+            idTodo.IsComplete = !idTodo.IsComplete;
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;
         }
