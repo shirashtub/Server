@@ -21,27 +21,31 @@ namespace project.Controllers
         public async Task<ActionResult<List<Users>>> GetUsers()
         {
             List<Users> res = await _usersData.GetAll();
+            if (res.Count == 0) { return BadRequest(new List<Users>()); }
             return Ok(res);
         }
 
         [HttpPost]
         public async Task<ActionResult> PostUsers([FromBody] Users u)
         {
-            await _usersData.Add(u);
+            bool isOk = await _usersData.Add(u);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> PutUsers(int id, [FromBody] Users u)
         {
-            await _usersData.Update(id, u);
+            bool isOk = await _usersData.Update(id, u);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUsers(int id)
         {
-            await _usersData.Delete(id);
+            bool isOk = await _usersData.Delete(id);
+            if (!isOk) { return BadRequest(); }
             return Ok();
         }
     }

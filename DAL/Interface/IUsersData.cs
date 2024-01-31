@@ -10,8 +10,8 @@ namespace DAL.Interface
     public interface IUsersData
     {
         Task<List<Users>> GetAll();
-        Task Add(Users users);
-        Task Delete(int id);
-        Task Update(int id, Users users);
+        Task<bool> Add(Users users);
+        Task<bool> Delete(int id);
+        Task<bool> Update(int id, Users users);
     }
 }

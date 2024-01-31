@@ -24,12 +24,12 @@ namespace Models.Models
         //        nowId = todos.Id + 1;
         //}
 
-        //public Todo(string description)
-        //{
-        //    Id = nowId++;
-        //    Description = description;
-        //    Date = DateTime.Now;
-        //    IsComplete = false;
-        //}
+        public Todo(string description)
+        {
+            //Id = nowId++;
+            Description = description;
+            Date = DateTime.Now;
+            IsComplete = false;
+        }
     }
 }
