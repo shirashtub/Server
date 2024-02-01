@@ -27,9 +27,9 @@ namespace project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostTodo([FromBody] string description)
+        public async Task<ActionResult> PostTodo([FromBody] Todo todo)
         {
-            bool res = await _todoData.Add(description);
+            bool res = await _todoData.Add(todo);
             if (!res) { return BadRequest(); }
             return Ok();
         }

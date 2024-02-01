@@ -12,10 +12,5 @@ namespace Models.Models
         public string Content { get; set; }
         public bool Like { get; set; }
 
-        public Post(string content)
-        {
-            Content = content;
-            Like = false;
-        }
     }
 }

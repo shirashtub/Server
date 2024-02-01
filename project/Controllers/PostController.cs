@@ -26,17 +26,17 @@ namespace project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostPost([FromBody] string c)
+        public async Task<ActionResult> PostPost([FromBody] Post post)
         {
-            bool isOk = await _postData.Add(c);
+            bool isOk = await _postData.Add(post);
             if (!isOk) { return BadRequest(); }
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPost(int id, [FromBody] string c)
+        public async Task<ActionResult> PutPost(int id, [FromBody] Post post)
         {
-            bool isOk = await _postData.Update(id, c);
+            bool isOk = await _postData.Update(id, post);
             if (!isOk) { return BadRequest(); }
             return Ok();
         }

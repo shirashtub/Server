@@ -23,9 +23,9 @@ namespace DAL.Data
             return photo;
         }
 
-        public async Task<bool> Add(string photo)
+        public async Task<bool> Add(Photo photo)
         {
-            await _projectContext.Photos.AddAsync(new Photo() { ImgURL = photo});
+            await _projectContext.Photos.AddAsync(photo);
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;
         }
@@ -39,11 +39,11 @@ namespace DAL.Data
             return isOk;
         }
 
-        public async Task<bool> Update(int id, string photo)
+        public async Task<bool> Update(int id, Photo photo)
         {
             var idPhoto = _projectContext.Photos.FirstOrDefault(x => x.Id == id);
             if (idPhoto == null) { return false; }
-            idPhoto.ImgURL = photo;
+            idPhoto.ImgURL = photo.ImgURL;
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;
         }
