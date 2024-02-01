@@ -24,18 +24,18 @@ namespace DAL.Data
             return posts;
         }
 
-        public async Task<bool> Add(string content)
+        public async Task<bool> Add(Post post)
         {
-            Post p = new Post(content);
-            await _projectContext.Posts.AddAsync(p);
+            post.Like = false;
+            await _projectContext.Posts.AddAsync(post);
             bool isOk = _projectContext.SaveChanges() > 0;
             return isOk;
         }
-        public async Task<bool> Update(int id, string content)
+        public async Task<bool> Update(int id, Post post)
         {
             var p = await _projectContext.Posts.FirstOrDefaultAsync(x => x.Id == id);
             if (p == null) { return false; }
-            p.Content = content;
+            p.Content = post.Content;
             bool isOk = _projectContext.SaveChanges() > 0;
             return isOk;
         }

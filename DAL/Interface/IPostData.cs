@@ -10,9 +10,9 @@ namespace DAL.Interface
     public interface IPostData
     {
         Task<List<Post>> GetAll();
-        Task<bool> Add(string content);
+        Task<bool> Add(Post post);
         Task<bool> Delete(int id);
-        Task<bool> Update(int id, string content);
+        Task<bool> Update(int id, Post post);
         Task<bool> UpdateLike(int id);
     }
 }

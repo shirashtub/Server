@@ -10,7 +10,7 @@ namespace DAL.Interface
     public interface ITodoData
     {
         Task<List<Todo>> GetAll();
-        Task<bool> Add(string description);
+        Task<bool> Add(Todo todo);
         Task<bool> Delete(int id);
         Task<bool> Update(int id, Todo todo);
         Task<bool> UpdateComplete(int id);

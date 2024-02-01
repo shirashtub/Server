@@ -23,9 +23,10 @@ namespace DAL.Data
             List<Todo> todos = await _projectContext.Todos.ToListAsync();
             return todos;
         }
-        public async Task<bool> Add(string description)
+        public async Task<bool> Add(Todo todo)
         {
-            Todo todo = new(description);
+            todo.Date = DateTime.Now;
+            todo.IsComplete = false;
             await _projectContext.Todos.AddAsync(todo);
             var isOk = _projectContext.SaveChanges() > 0;
             return isOk;

@@ -25,7 +25,7 @@ namespace project.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostPhoto([FromBody] string p)
+        public async Task<ActionResult> PostPhoto([FromBody] Photo p)
         {
             bool isOk = await _photoData.Add(p);
             if (!isOk) { return BadRequest(); }
@@ -33,7 +33,7 @@ namespace project.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutPhoto(int id, [FromBody] string p)
+        public async Task<ActionResult> PutPhoto(int id, [FromBody] Photo p)
         {
             bool isOk = await _photoData.Update(id, p);
             if (!isOk) { return BadRequest(); }

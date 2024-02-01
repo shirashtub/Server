@@ -10,8 +10,8 @@ namespace DAL.Interface
     public interface IPhotoData
     {
         Task<List<Photo>> GetAll();
-        Task<bool> Add(string photo);
+        Task<bool> Add(Photo photo);
         Task<bool> Delete(int id);
-        Task<bool> Update(int id, string photo);
+        Task<bool> Update(int id, Photo photo);
     }
 }
